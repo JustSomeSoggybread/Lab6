@@ -19,23 +19,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   7 .module_info_crc 00000004  000d5cd4  000d5cd4  00025cd4  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .debug_info   00135a2f  00000000  00000000  00025cd8  2**0
+  8 .debug_info   00150a96  00000000  00000000  00025cd8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_abbrev 000128de  00000000  00000000  0015b707  2**0
+  9 .debug_abbrev 00013d90  00000000  00000000  0017676e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0002d7cd  00000000  00000000  0016dfe5  2**0
+ 10 .debug_loc    000307d9  00000000  00000000  0018a4fe  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 00002508  00000000  00000000  0019b7b2  2**0
+ 11 .debug_aranges 00002668  00000000  00000000  001bacd7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00008240  00000000  00000000  0019dcba  2**0
+ 12 .debug_ranges 00008568  00000000  00000000  001bd33f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  00033db3  00000000  00000000  001a5efa  2**0
+ 13 .debug_macro  00036998  00000000  00000000  001c58a7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   00031b01  00000000  00000000  001d9cad  2**0
+ 14 .debug_line   000354b4  00000000  00000000  001fc23f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    00120a11  00000000  00000000  0020b7ae  2**0
+ 15 .debug_str    00124b92  00000000  00000000  002316f3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_frame  0000671c  00000000  00000000  0032c1c0  2**2
+ 16 .debug_frame  00006c9c  00000000  00000000  00356288  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -188,9 +188,10 @@ class SystemClass {
    d40bc:	bd10      	pop	{r4, pc}
 
 000d40be <setup>:
+  #include "oled-wing-adafruit.h"
 
-SYSTEM_MODE(MANUAL);
-SYSTEM_THREAD(ENABLED);
+  OledWingAdafruit display;
+*/
 
 void setup() {
    d40be:	b508      	push	{r3, lr}
@@ -198,7 +199,11 @@ void setup() {
    d40c0:	f000 fd58 	bl	d4b74 <_Z16_fetch_usbserialv>
    d40c4:	f44f 5116 	mov.w	r1, #9600	; 0x2580
    d40c8:	f000 fd48 	bl	d4b5c <_ZN9USBSerial5beginEl>
-  pinMode(A4, INPUT);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+
+*/
+
 }
    d40cc:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
   pinMode(A4, INPUT);
@@ -246,10 +251,10 @@ void loop() {
   Serial.println(temperature);
    d4118:	4620      	mov	r0, r4
    d411a:	2102      	movs	r1, #2
-  /*
-  uint64_t reading = analogRead(A4);
-  double voltage = (reading * 3.3) / 4095.0;
-  double temperature = (voltage - 0.5) * 100;
+  display.loop();
+  display.clearDisplay();
+  display.display();
+  display.println("Hello, world!");
   */
    d411c:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
   Serial.println(temperature);
@@ -1044,7 +1049,7 @@ EthernetClass Ethernet;
 
 } // spark
    d4556:	4770      	bx	lr
-   d4558:	2003e644 	.word	0x2003e644
+   d4558:	2003e650 	.word	0x2003e650
    d455c:	000d5aa0 	.word	0x000d5aa0
 
 000d4560 <_ZN8SPIClassC1E19hal_spi_interface_t>:
@@ -1115,8 +1120,8 @@ SystemClass System;
    d4594:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
 SystemClass System;
    d4598:	f000 bd66 	b.w	d5068 <__aeabi_atexit>
-   d459c:	2003e658 	.word	0x2003e658
-   d45a0:	2003e64c 	.word	0x2003e64c
+   d459c:	2003e664 	.word	0x2003e664
+   d45a0:	2003e658 	.word	0x2003e658
    d45a4:	ffff0000 	.word	0xffff0000
    d45a8:	2003e634 	.word	0x2003e634
    d45ac:	000d40af 	.word	0x000d40af
@@ -1193,7 +1198,7 @@ RecursiveMutex WiringBleLock::mutex_;
    d45e8:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
 RecursiveMutex WiringBleLock::mutex_;
    d45ec:	f000 bd3c 	b.w	d5068 <__aeabi_atexit>
-   d45f0:	2003e65c 	.word	0x2003e65c
+   d45f0:	2003e668 	.word	0x2003e668
    d45f4:	2003e634 	.word	0x2003e634
    d45f8:	000d45b1 	.word	0x000d45b1
 
@@ -1628,7 +1633,7 @@ void spark::logProcessControlRequest(ctrl_request* req) {
     JSONRequestHandler::process(req);
 }
    d4862:	4770      	bx	lr
-   d4864:	2003e660 	.word	0x2003e660
+   d4864:	2003e66c 	.word	0x2003e66c
    d4868:	000d5ae2 	.word	0x000d5ae2
 
 000d486c <_GLOBAL__sub_I_TIME_FORMAT_DEFAULT>:
@@ -1651,7 +1656,7 @@ TimeClass Time;
    d4874:	4770      	bx	lr
    d4876:	bf00      	nop
    d4878:	2003e5cc 	.word	0x2003e5cc
-   d487c:	2003e664 	.word	0x2003e664
+   d487c:	2003e670 	.word	0x2003e670
 
 000d4880 <_ZN8RGBClassD1Ev>:
 #include "rgbled.h"
@@ -1687,7 +1692,7 @@ RGBClass RGB;
    d4894:	6083      	str	r3, [r0, #8]
    d4896:	f000 bbe7 	b.w	d5068 <__aeabi_atexit>
    d489a:	bf00      	nop
-   d489c:	2003e668 	.word	0x2003e668
+   d489c:	2003e674 	.word	0x2003e674
    d48a0:	2003e634 	.word	0x2003e634
    d48a4:	000d4881 	.word	0x000d4881
 
@@ -1814,7 +1819,7 @@ static void ctrl_request_handler(ctrl_request* req) {
    d495e:	f7ff fd37 	bl	d43d0 <system_ctrl_set_result>
 }
    d4962:	e7f4      	b.n	d494e <_ZL20ctrl_request_handlerP12ctrl_request+0x1e>
-   d4964:	2003e67c 	.word	0x2003e67c
+   d4964:	2003e688 	.word	0x2003e688
 
 000d4968 <module_user_init_hook>:
 {
@@ -1883,7 +1888,7 @@ static void ctrl_request_handler(ctrl_request* req) {
    d49b4:	2003f400 	.word	0x2003f400
    d49b8:	000d48a9 	.word	0x000d48a9
    d49bc:	9a271c1e 	.word	0x9a271c1e
-   d49c0:	2003e678 	.word	0x2003e678
+   d49c0:	2003e684 	.word	0x2003e684
    d49c4:	00000000 	.word	0x00000000
    d49c8:	000d4931 	.word	0x000d4931
 
@@ -2250,8 +2255,8 @@ USBSerial& _fetch_usbserial()
    d4bb2:	b008      	add	sp, #32
    d4bb4:	bd10      	pop	{r4, pc}
    d4bb6:	bf00      	nop
-   d4bb8:	2003e680 	.word	0x2003e680
-   d4bbc:	2003e684 	.word	0x2003e684
+   d4bb8:	2003e68c 	.word	0x2003e68c
+   d4bbc:	2003e690 	.word	0x2003e690
    d4bc0:	2003e634 	.word	0x2003e634
    d4bc4:	000d4abd 	.word	0x000d4abd
 
@@ -2440,10 +2445,10 @@ USARTSerial& __fetch_global_Serial1()
    d4ca6:	4804      	ldr	r0, [pc, #16]	; (d4cb8 <_Z22__fetch_global_Serial1v+0x48>)
    d4ca8:	b002      	add	sp, #8
    d4caa:	bd10      	pop	{r4, pc}
-   d4cac:	2003e698 	.word	0x2003e698
-   d4cb0:	2003e69c 	.word	0x2003e69c
-   d4cb4:	2003e720 	.word	0x2003e720
-   d4cb8:	2003e7a4 	.word	0x2003e7a4
+   d4cac:	2003e6a4 	.word	0x2003e6a4
+   d4cb0:	2003e6a8 	.word	0x2003e6a8
+   d4cb4:	2003e72c 	.word	0x2003e72c
+   d4cb8:	2003e7b0 	.word	0x2003e7b0
    d4cbc:	2003e634 	.word	0x2003e634
    d4cc0:	000d4bc9 	.word	0x000d4bc9
 
@@ -2652,7 +2657,7 @@ the same way.
     // NetworkClass& Network = WiFi;
 }
    d4da6:	4770      	bx	lr
-   d4da8:	2003e7b8 	.word	0x2003e7b8
+   d4da8:	2003e7c4 	.word	0x2003e7c4
    d4dac:	000d5ba8 	.word	0x000d5ba8
 
 000d4db0 <_ZN5spark12NetworkClass7connectEj>:
@@ -2952,7 +2957,7 @@ class IPAddress : public Printable {
 
 } // spark
    d4f12:	4770      	bx	lr
-   d4f14:	2003e7c0 	.word	0x2003e7c0
+   d4f14:	2003e7cc 	.word	0x2003e7cc
    d4f18:	000d5be4 	.word	0x000d5be4
 
 000d4f1c <pinAvailable>:
@@ -3027,8 +3032,8 @@ public:
    d4f88:	7c00      	ldrb	r0, [r0, #16]
    d4f8a:	f7ff f977 	bl	d427c <hal_usart_is_enabled>
    d4f8e:	e7f2      	b.n	d4f76 <pinAvailable+0x5a>
-   d4f90:	2003e7c8 	.word	0x2003e7c8
-   d4f94:	2003e7cc 	.word	0x2003e7cc
+   d4f90:	2003e644 	.word	0x2003e644
+   d4f94:	2003e648 	.word	0x2003e648
 
 000d4f98 <pinMode>:
   if(pin >= TOTAL_PINS || setMode == PIN_MODE_NONE )
