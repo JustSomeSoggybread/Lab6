@@ -46,6 +46,6 @@ void loop() {
   display.loop();
   display.clearDisplay();
   display.display();
-  display.println("Hello, world!");
+  display.println(temperature);
   */
 }

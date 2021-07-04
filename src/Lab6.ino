@@ -15,10 +15,8 @@ void setup() {
 
 /*
   display.setup();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0,0);
-
+  display.clearDisplay();
+  display.display();
 */
 
 }
@@ -36,7 +34,11 @@ void loop() {
   /*
   display.loop();
   display.clearDisplay();
+
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+  display.println(temperature);
   display.display();
-  display.println("Hello, world!");
   */
 }
